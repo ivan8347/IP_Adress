@@ -1,0 +1,171 @@
+﻿<Window x:Class="IP_Adress.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:IP_Adress"
+        Title="Классы IP-адресов"
+        WindowStartupLocation="CenterOwner"
+        WindowState="Maximized"
+        Background="#121212"
+        Foreground="White">
+
+    <!-- РЕСУРСЫ ОКНА -->
+    <Window.Resources>
+        <local:NetworkBitsMultiConverter x:Key="NetworkBitsConverter"/>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Классы IP-адресов (A, B, C)"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0 0 0 20"/>
+
+        <!-- Ввод IP -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 0 10">
+            <TextBox x:Name="IpInput"
+                     Width="250"
+                     Height="50"
+                     FontSize="20"
+                     Padding="10"
+                     TextAlignment="Center"
+                     Background="#1E1E1E"
+                     BorderBrush="#444"
+                     Foreground="White"/>
+
+            <Button Content="Определить класс"
+                    Height="50"
+                    Margin="10 0 0 0"
+                    Padding="10 5"
+                    FontSize="16"
+                    Click="CheckIpClass_Click"/>
+        </StackPanel>
+
+        <!-- Визуализация октетов -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 10">
+            <Border x:Name="Oct1" Width="80" Height="50" CornerRadius="8" Margin="5" Background="#333">
+                <TextBlock x:Name="Oct1Text" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            </Border>
+            <Border x:Name="Oct2" Width="80" Height="50" CornerRadius="8" Margin="5" Background="#333">
+                <TextBlock x:Name="Oct2Text" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            </Border>
+            <Border x:Name="Oct3" Width="80" Height="50" CornerRadius="8" Margin="5" Background="#333">
+                <TextBlock x:Name="Oct3Text" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            </Border>
+            <Border x:Name="Oct4" Width="80" Height="50" CornerRadius="8" Margin="5" Background="#333">
+                <TextBlock x:Name="Oct4Text" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            </Border>
+        </StackPanel>
+
+        <!-- Формула сверху -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0 0 50 10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="2^" FontSize="32" FontWeight="Bold"/>
+                <TextBox x:Name="PowerInput"
+                 Width="60"
+                 FontSize="28"
+                 Margin="10 0"
+                 TextAlignment="Center"
+                 Background="#1E1E1E"
+                 Foreground="Gold"
+                 BorderBrush="#555"
+                 TextChanged="PowerInput_TextChanged"/>
+                <TextBlock Text=" = " FontSize="32" FontWeight="Bold"/>
+                <TextBlock x:Name="FormulaResult" FontSize="32" FontWeight="Bold" Foreground="LightGreen"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <!-- Список классов -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ListBox x:Name="IpList"
+                     Background="Transparent"
+                     Foreground="White"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch">
+                <!--SelectionChanged="IpList_SelectionChanged">-->
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding Color}"
+                                CornerRadius="12"
+                                Padding="24"
+                                Margin="0 0 0 15">
+
+                            <StackPanel>
+
+                                <!-- Название -->
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Margin="0 0 0 0"
+                                           TextAlignment="Center"/>
+
+                                <!-- Описание -->
+                                <!--<TextBlock Text="Описание:" FontWeight="Bold" Margin="0 0 0 0" TextAlignment="Center"/>-->
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="22" TextAlignment="Center"/>
+                                
+                                <!-- Бинарный диапазон -->
+                                <TextBlock Text="Бинарный диапазон:" FontWeight="Bold"/>
+
+                                <TextBlock FontSize="18">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource NetworkBitsConverter}">
+                                            <Binding Path="BinaryStart"/>
+                                            <Binding Path="BitsNetwork"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <TextBlock FontSize="18" Margin="0 0 0 10">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource NetworkBitsConverter}">
+                                            <Binding Path="BinaryEnd"/>
+                                            <Binding Path="BitsNetwork"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <!-- Маска -->
+                                <TextBlock Text="Маска:" FontWeight="Bold" Margin="0 10 0 0"/>
+                                <TextBlock FontSize="20">
+                                    <Run Text="{Binding MaskSlash}" Foreground="Gold"/>
+                                    <Run Text="  ("/>
+                                    <Run Text="{Binding MaskDecimal}" Foreground="LightGreen"/>
+                                    <Run Text=")"/>
+                                </TextBlock>
+
+                                <!-- Формула сетей -->
+                                <TextBlock Text="Количество сетей:" FontWeight="Bold" Margin="0 10 0 0"/>
+                                <TextBlock FontSize="20">
+                                    <Run Text="2"/>
+                                    <Run Text="{Binding BitsNetwork}" Typography.Variants="Superscript" Foreground="Gold"/>
+                                    <Run Text=" = "/>
+                                    <Run Text="{Binding Networks}" FontWeight="Bold"/>
+                                </TextBlock>
+
+                                <!-- Формула хостов -->
+                                <TextBlock Text="Количество хостов:" FontWeight="Bold" Margin="0 10 0 0"/>
+                                <TextBlock FontSize="20">
+                                    <Run Text="2"/>
+                                    <Run Text="{Binding BitsHost}" Typography.Variants="Superscript" Foreground="Gold"/>
+                                    <Run Text=" − 2 = "/>
+                                    <Run Text="{Binding Hosts}" FontWeight="Bold"/>
+                                </TextBlock>
+
+
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+
+    </Grid>
+</Window>
