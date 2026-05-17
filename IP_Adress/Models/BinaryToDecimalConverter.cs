@@ -11,13 +11,11 @@ namespace IP_Adress
             if (value == null)
                 return "";
 
-            string bits = value.ToString();
-
-            // Убираем пробелы, если есть
-            bits = bits.Replace(" ", "");
+            string bits = value.ToString().Replace(" ", "");
 
             if (bits.Length != 8)
                 return "";
+
             try
             {
                 int dec = System.Convert.ToInt32(bits, 2);
@@ -28,6 +26,7 @@ namespace IP_Adress
                 return "";
             }
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
