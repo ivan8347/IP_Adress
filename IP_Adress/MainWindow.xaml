@@ -112,56 +112,87 @@
                                 <!-- Описание -->
                                 <!--<TextBlock Text="Описание:" FontWeight="Bold" Margin="0 0 0 0" TextAlignment="Center"/>-->
                                 <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="22" TextAlignment="Center"/>
-                                
-                                <!-- Бинарный диапазон -->
-                                <TextBlock Text="Бинарный диапазон:" FontWeight="Bold"/>
 
-                                <TextBlock FontSize="18">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource NetworkBitsConverter}">
-                                            <Binding Path="BinaryStart"/>
-                                            <Binding Path="BitsNetwork"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                                
+                                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Center">
 
-                                <TextBlock FontSize="18" Margin="0 0 0 10">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource NetworkBitsConverter}">
-                                            <Binding Path="BinaryEnd"/>
-                                            <Binding Path="BitsNetwork"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                                
+                                    <!-- Диапазон -->
+                                    <StackPanel Margin="20 0">
+                                        <TextBlock Text="Диапазон:" FontWeight="Bold" TextAlignment="Center"/>
+                                        
+                                        <TextBlock FontSize="18">
+                                            <Run Text="{Binding FirstBits}" Foreground="Gold"/>
+                                            <Run Text="{Binding OtherBits}" Foreground="White"/>
+                                            <Run Text=" = "/>
+                                            <Run Text="{Binding DecimalStart}" Foreground="LightGreen"/>
+                                        </TextBlock>
 
-                                <!-- Маска -->
-                                <TextBlock Text="Маска:" FontWeight="Bold" Margin="0 10 0 0"/>
-                                <TextBlock FontSize="20">
-                                    <Run Text="{Binding MaskSlash}" Foreground="Gold"/>
-                                    <Run Text="  ("/>
-                                    <Run Text="{Binding MaskDecimal}" Foreground="LightGreen"/>
-                                    <Run Text=")"/>
-                                </TextBlock>
+                                        <TextBlock FontSize="18">
+                                            <Run Text="{Binding FirstBitsEnd}" Foreground="Gold"/>
+                                            <Run Text="{Binding OtherBitsEnd}" Foreground="White"/>
+                                            <Run Text=" = "/>
+                                            <Run Text="{Binding DecimalEnd}" Foreground="LightGreen"/>
+                                        </TextBlock>
 
-                                <!-- Формула сетей -->
-                                <TextBlock Text="Количество сетей:" FontWeight="Bold" Margin="0 10 0 0"/>
-                                <TextBlock FontSize="20">
-                                    <Run Text="2"/>
-                                    <Run Text="{Binding BitsNetwork}" Typography.Variants="Superscript" Foreground="Gold"/>
-                                    <Run Text=" = "/>
-                                    <Run Text="{Binding Networks}" FontWeight="Bold"/>
-                                </TextBlock>
+                                    </StackPanel>
 
-                                <!-- Формула хостов -->
-                                <TextBlock Text="Количество хостов:" FontWeight="Bold" Margin="0 10 0 0"/>
-                                <TextBlock FontSize="20">
-                                    <Run Text="2"/>
-                                    <Run Text="{Binding BitsHost}" Typography.Variants="Superscript" Foreground="Gold"/>
-                                    <Run Text=" − 2 = "/>
-                                    <Run Text="{Binding Hosts}" FontWeight="Bold"/>
-                                </TextBlock>
+                                    <!-- Количество сетей -->
+                                    <StackPanel Margin="20 0" Width="260">
+                                        <TextBlock Text="Количество сетей:" 
+                                            FontWeight="Bold" 
+                                            TextAlignment="Center"/>
+
+                                        <!-- Поле ввода ПОД надписью -->
+                                        <TextBox Text="{Binding Networks, Mode=TwoWay}"
+                 FontSize="20"
+                 Margin="0 5"
+                 HorizontalContentAlignment="Center"
+                 Background="#1E1E1E"
+                 Foreground="LightGreen"
+                 BorderBrush="#555"/>
+
+                                        <!-- Объяснение ПОД полем -->
+                                        <TextBlock Text="{Binding NetworksExplanation}"
+                                            FontSize="14"
+                                            TextWrapping="Wrap"
+                                            Foreground="#CCCCCC"
+                                            TextAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <!-- Количество хостов -->
+                                    <StackPanel Margin="20 0" Width="260">
+                                        <TextBlock Text="Количество хостов:" 
+                                             FontWeight="Bold" 
+                                             TextAlignment="Center"/>
+
+                                        <!-- Поле ввода ПОД надписью -->
+                                        <TextBox Text="{Binding Hosts, Mode=TwoWay}"
+                                              FontSize="20"
+                                              Margin="0 5"
+                                              HorizontalContentAlignment="Center"
+                                              Background="#1E1E1E"
+                                              Foreground="LightGreen"
+                                              BorderBrush="#555"/>
+
+                                        <!-- Объяснение ПОД полем -->
+                                        <TextBlock Text="{Binding HostsExplanation}"
+                                               FontSize="14"
+                                               TextWrapping="Wrap"
+                                               Foreground="#CCCCCC"
+                                               TextAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <!-- Маска -->
+                                    <StackPanel Margin="20 0">
+                                        <TextBlock Text="Маска:" FontWeight="Bold" TextAlignment="Center"/>
+                                        <TextBlock FontSize="20">
+                                                <Run Text="{Binding MaskSlash}" Foreground="Gold"/>
+                                                <Run Text="  ("/>
+                                                <Run Text="{Binding MaskDecimal}" Foreground="LightGreen"/>
+                                                <Run Text=")"/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                </StackPanel>
 
 
                             </StackPanel>

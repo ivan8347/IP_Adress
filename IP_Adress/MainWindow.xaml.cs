@@ -8,7 +8,7 @@ namespace IP_Adress
 {
     public partial class MainWindow : Window
     {
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +41,11 @@ namespace IP_Adress
                     MaskDecimal = "255.0.0.0",
 
                     Description = "Очень крупные сети. Первый байт - сеть. Можно подключить не более 16 777 214 устройств. ",
-                    Color = "#FF1E3A5F"
+                    Color = "#FF1E3A5F",
+
+                    NetworksExplanation = "Число сетей определяется количеством бит, которые остаются после фиксированного первого бита 0. В классе A доступно 7 бит для сетей, поэтому возможны 128 сетей.",
+                    HostsExplanation = "Количество хостов определяется количеством бит, оставшихся после бита сети. В классе A под хосты остаётся 24 бита — это даёт 16 777 214 возможных устройств."
+
                 },
 
                 new IpClass
@@ -66,7 +70,11 @@ namespace IP_Adress
                     MaskDecimal = "255.255.0.0",
 
                     Description = "Средние сети. Первые два октета — сеть.",
-                    Color = "#FF225F3A"
+                    Color = "#FF225F3A",
+
+                    NetworksExplanation = "В классе B первые два бита всегда 10, поэтому для сетей остаётся 14 бит. Это даёт 16384 возможных сетей.",
+                    HostsExplanation = "Под хосты остаётся 16 бит, что позволяет адресовать до 65534 устройств."
+
                 },
 
                 new IpClass
@@ -91,12 +99,16 @@ namespace IP_Adress
                     MaskDecimal = "255.255.255.0",
 
                     Description = "Малые сети. Первые три октета — сеть.",
-                    Color = "#FF5F3A22"
+                    Color = "#FF5F3A22",
+
+                    NetworksExplanation = "В классе C первые три бита 110, поэтому для сетей остаётся 21 бит. Это даёт 2 097 152 сети.",
+                    HostsExplanation = "Под хосты остаётся 8 бит, что позволяет адресовать до 254 устройств."
+
                 }
             };
         }
 
-       
+
 
         private void CheckIpClass_Click(object sender, RoutedEventArgs e)
         {
