@@ -25,26 +25,15 @@ namespace IP_Adress
 
                     BinaryStart = "00000000",
                     BinaryEnd   = "01111111",
+    
+                    Networks = "",
+                    Hosts = "",
 
-                    DecimalStart = "1.0.0.0",
-                    DecimalEnd   = "126.255.255.255",
+                    MaskSlash = "  1. 0 . 0 . 0",
+                    MaskDecimal = "126.255.255.255",
 
-                    Structure = "N.H.H.H",
-
-                    BitsNetwork = 7,
-                    BitsHost = 24,
-
-                    Networks = "128 (фактически 126)",
-                    Hosts = "16 777 214",
-
-                    MaskSlash = "/8",
-                    MaskDecimal = "255.0.0.0",
-
-                    Description = "Очень крупные сети. Первый байт - сеть. Можно подключить не более 16 777 214 устройств. ",
+                    Description = "Очень крупные сети. Первый байт - сеть.",
                     Color = "#FF1E3A5F",
-
-                    NetworksExplanation = "Число сетей определяется количеством бит, которые остаются после фиксированного первого бита 0. В классе A доступно 7 бит для сетей, поэтому возможны 128 сетей.",
-                    HostsExplanation = "Количество хостов определяется количеством бит, оставшихся после бита сети. В классе A под хосты остаётся 24 бита — это даёт 16 777 214 возможных устройств."
 
                 },
 
@@ -55,26 +44,17 @@ namespace IP_Adress
                     BinaryStart = "10000000",
                     BinaryEnd   = "10111111",
 
-                    DecimalStart = "128.0.0.0",
-                    DecimalEnd   = "191.255.255.255",
+                    DecimalStart = "128",
+                    DecimalEnd   = "191",
 
-                    Structure = "N.N.H.H",
+                    Networks = "",
+                    Hosts = "",
 
-                    BitsNetwork = 14,
-                    BitsHost = 16,
+                    MaskSlash = "128. 0 . 0 . 0",
+                    MaskDecimal = "191.255.255.255",
 
-                    Networks = "16 384",
-                    Hosts = "65 534",
-
-                    MaskSlash = "/16",
-                    MaskDecimal = "255.255.0.0",
-
-                    Description = "Средние сети. Первые два октета — сеть.",
+                    Description = "Средние сети. Первые ДВА байта — сеть.",
                     Color = "#FF225F3A",
-
-                    NetworksExplanation = "В классе B первые два бита всегда 10, поэтому для сетей остаётся 14 бит. Это даёт 16384 возможных сетей.",
-                    HostsExplanation = "Под хосты остаётся 16 бит, что позволяет адресовать до 65534 устройств."
-
                 },
 
                 new IpClass
@@ -84,40 +64,30 @@ namespace IP_Adress
                     BinaryStart = "11000000",
                     BinaryEnd   = "11011111",
 
-                    DecimalStart = "192.0.0.0",
-                    DecimalEnd   = "223.255.255.255",
+                    DecimalStart = "192",
+                    DecimalEnd   = "223",
 
-                    Structure = "N.N.N.H",
+                    Networks = "",
+                    Hosts = "",
 
-                    BitsNetwork = 21,
-                    BitsHost = 8,
+                    MaskSlash =     "192. 0 . 0 . 0",
+                    MaskDecimal =   "223.255.255.255",
 
-                    Networks = "2 097 152",
-                    Hosts = "254",
-
-                    MaskSlash = "/24",
-                    MaskDecimal = "255.255.255.0",
-
-                    Description = "Малые сети. Первые три октета — сеть.",
+                    Description = "Малые сети. Первые ТРИ байта — сеть.",
                     Color = "#FF5F3A22",
-
-                    NetworksExplanation = "В классе C первые три бита 110, поэтому для сетей остаётся 21 бит. Это даёт 2 097 152 сети.",
-                    HostsExplanation = "Под хосты остаётся 8 бит, что позволяет адресовать до 254 устройств."
 
                 }
             };
         }
 
-
-
         private void CheckIpClass_Click(object sender, RoutedEventArgs e)
         {
             string ip = IpInput.Text.Trim();
-            if (!System.Net.IPAddress.TryParse(ip, out _))
+           /* if (!System.Net.IPAddress.TryParse(ip, out _))
             {
                 MessageBox.Show("Некорректный IP");
                 return;
-            }
+            }*/
 
             string[] parts = ip.Split('.');
             int first = int.Parse(parts[0]);
@@ -144,12 +114,7 @@ namespace IP_Adress
             {
                 HighlightClassC();
             }
-            else
-            {
-                MessageBox.Show("Это не класс A/B/C");
-            }
         }
-
         private void ResetOctetColors()
         {
             Oct1.Background = Oct2.Background = Oct3.Background = Oct4.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 50, 50));
@@ -188,6 +153,17 @@ namespace IP_Adress
             {
                 FormulaResult.Text = "";
             }
+        }
+       /* private void Btn_Informacion_click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show ("ура");
+            return;
+        }*/
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            InfoWindow info = new InfoWindow();
+            info.Owner = this;
+            info.ShowDialog();
         }
 
     }

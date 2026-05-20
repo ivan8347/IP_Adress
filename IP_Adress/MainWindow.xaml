@@ -9,11 +9,7 @@
         Foreground="White">
 
     <!-- РЕСУРСЫ ОКНА -->
-    <Window.Resources>
-        <local:NetworkBitsMultiConverter x:Key="NetworkBitsConverter"/>
-        <local:BinaryToDecimalConverter x:Key="BinaryToDecimalConverter"/>
-
-    </Window.Resources>
+   
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -46,6 +42,8 @@
                     Margin="10 0 0 0"
                     Padding="10 5"
                     FontSize="16"
+                    Background="#121212"
+                    Foreground="White"
                     Click="CheckIpClass_Click"/>
         </StackPanel>
 
@@ -91,8 +89,6 @@
                      Foreground="White"
                      BorderThickness="0"
                      HorizontalContentAlignment="Stretch">
-                <!--SelectionChanged="IpList_SelectionChanged">-->
-
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border Background="{Binding Color}"
@@ -110,90 +106,126 @@
                                            TextAlignment="Center"/>
 
                                 <!-- Описание -->
-                                <!--<TextBlock Text="Описание:" FontWeight="Bold" Margin="0 0 0 0" TextAlignment="Center"/>-->
                                 <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="22" TextAlignment="Center"/>
 
-                                <StackPanel Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Center">
+                                <Grid Margin="0 20 0 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
                                     <!-- Диапазон -->
-                                    <StackPanel Margin="20 0">
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
                                         <TextBlock Text="Диапазон:" FontWeight="Bold" TextAlignment="Center"/>
-                                        
-                                        <TextBlock FontSize="18">
+
+                                        <TextBlock FontSize="26" TextAlignment="Left">
                                             <Run Text="{Binding FirstBits}" Foreground="Gold"/>
                                             <Run Text="{Binding OtherBits}" Foreground="White"/>
                                             <Run Text=" = "/>
                                             <Run Text="{Binding DecimalStart}" Foreground="LightGreen"/>
                                         </TextBlock>
 
-                                        <TextBlock FontSize="18">
+                                        <TextBlock FontSize="26" TextAlignment="Left">
                                             <Run Text="{Binding FirstBitsEnd}" Foreground="Gold"/>
                                             <Run Text="{Binding OtherBitsEnd}" Foreground="White"/>
                                             <Run Text=" = "/>
                                             <Run Text="{Binding DecimalEnd}" Foreground="LightGreen"/>
                                         </TextBlock>
-
                                     </StackPanel>
 
                                     <!-- Количество сетей -->
-                                    <StackPanel Margin="20 0" Width="260">
-                                        <TextBlock Text="Количество сетей:" 
-                                            FontWeight="Bold" 
-                                            TextAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" Width="240">
+                                        <TextBlock Text="Количество сетей:" FontWeight="Bold" TextAlignment="Center"/>
 
-                                        <!-- Поле ввода ПОД надписью -->
-                                        <TextBox Text="{Binding Networks, Mode=TwoWay}"
-                 FontSize="20"
-                 Margin="0 5"
-                 HorizontalContentAlignment="Center"
-                 Background="#1E1E1E"
-                 Foreground="LightGreen"
-                 BorderBrush="#555"/>
-
-                                        <!-- Объяснение ПОД полем -->
-                                        <TextBlock Text="{Binding NetworksExplanation}"
-                                            FontSize="14"
-                                            TextWrapping="Wrap"
-                                            Foreground="#CCCCCC"
-                                            TextAlignment="Center"/>
-                                    </StackPanel>
-
-                                    <!-- Количество хостов -->
-                                    <StackPanel Margin="20 0" Width="260">
-                                        <TextBlock Text="Количество хостов:" 
-                                             FontWeight="Bold" 
-                                             TextAlignment="Center"/>
-
-                                        <!-- Поле ввода ПОД надписью -->
-                                        <TextBox Text="{Binding Hosts, Mode=TwoWay}"
+                                        <TextBox Text="{Binding Networks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FontSize="20"
                                               Margin="0 5"
                                               HorizontalContentAlignment="Center"
                                               Background="#1E1E1E"
-                                              Foreground="LightGreen"
+                                              Foreground="{Binding NetworksColor}"
                                               BorderBrush="#555"/>
 
-                                        <!-- Объяснение ПОД полем -->
-                                        <TextBlock Text="{Binding HostsExplanation}"
-                                               FontSize="14"
-                                               TextWrapping="Wrap"
-                                               Foreground="#CCCCCC"
-                                               TextAlignment="Center"/>
+                                        <!--<Button Content="Информация"
+                                                Margin="0 10 0 0"
+                                                Width="150"
+                                                Height="50"
+                                                FontSize="18"
+                                                Background="{Binding Color}"
+                                                Foreground="Red"
+                                                Click="Btn_Informacion_click"/>-->
+
+                                        <!--<TextBlock Text="{Binding NetworksExplanation}"
+                                             FontSize="14"
+                                             TextWrapping="Wrap"
+                                             Foreground="#CCCCCC"
+                                             TextAlignment="Center"/>-->
                                     </StackPanel>
+
+                                    <!-- Количество хостов -->
+                                    <StackPanel Grid.Column="2" HorizontalAlignment="Center" Width="240">
+                                        <TextBlock Text="Количество хостов:" FontWeight="Bold" TextAlignment="Center"/>
+
+                                        <TextBox Text="{Binding Hosts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             FontSize="20"
+                                             Margin="0 5"
+                                             HorizontalContentAlignment="Center"
+                                             Background="#1E1E1E"
+                                             Foreground="{Binding HostsColor}"
+                                             BorderBrush="#555"/>
+
+                                        <!--<TextBlock Text="{Binding HostsExplanation}"
+                                            FontSize="14"
+                                            TextWrapping="Wrap"
+                                            Foreground="#CCCCCC"
+                                            TextAlignment="Center"/>-->
+                                         </StackPanel>
 
                                     <!-- Маска -->
-                                    <StackPanel Margin="20 0">
+                                    <StackPanel Grid.Column="3" HorizontalAlignment="Center">
                                         <TextBlock Text="Маска:" FontWeight="Bold" TextAlignment="Center"/>
-                                        <TextBlock FontSize="20">
-                                                <Run Text="{Binding MaskSlash}" Foreground="Gold"/>
-                                                <Run Text="  ("/>
-                                                <Run Text="{Binding MaskDecimal}" Foreground="LightGreen"/>
-                                                <Run Text=")"/>
-                                        </TextBlock>
+                                        <TextBlock Text="{Binding MaskSlash}" Foreground="White" FontSize="20" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding MaskDecimal}" Foreground="White" FontSize="20" TextAlignment="Center"/>
                                     </StackPanel>
+                                </Grid>
+                                <Button         Width="60"
+                                                    Height="60"
+                                                    Background="{Binding Color}"
+                                                    BorderThickness="0"
+                                                    Cursor="Hand"
+                                                    Click="InfoButton_Click">
 
-                                </StackPanel>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid>
 
+                                                <!-- Круг -->
+                                                <Ellipse x:Name="Circle"
+                                                        Fill="{Binding Color}"
+                                                        Stroke="Red"
+                                                        StrokeThickness="5"/>
+
+                                                <!-- Буква i -->
+                                                <TextBlock Text="i"
+                                                        FontSize="36"
+                                                        FontWeight="Bold"
+                                                        Foreground="White"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"/>
+                                            </Grid>
+
+                                            <!-- Убираем hover -->
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Circle" Property="Fill" Value="#1E1E1E"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+
+                                        </ControlTemplate>
+                                    </Button.Template>
+
+                                </Button>
 
                             </StackPanel>
                         </Border>
