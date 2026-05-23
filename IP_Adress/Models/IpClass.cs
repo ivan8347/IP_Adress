@@ -10,7 +10,6 @@ namespace IP_Adress
         private void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        // Основные свойства
 
         public string Name { get; set; }
         public string Description { get; set; }
